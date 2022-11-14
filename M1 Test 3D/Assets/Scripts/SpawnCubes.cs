@@ -29,8 +29,12 @@ public class SpawnCubes : MonoBehaviour {
         new Vector3(0, 0, 0),//midgard
     };
     List<Vector3> realmPositions;
+    Transform branchesContainer;
+    Transform leavesContainer;
     // Start is called before the first frame update
     void Start() {
+        branchesContainer = transform.Find("Branches");
+        leavesContainer = transform.Find("Leaves");
         realmPositions = new List<Vector3>();
         // spawnTree(transform.position + transform.up * 1000, Quaternion.identity, 0);
         // spawnTree(transform.position + transform.up * 2000, Quaternion.identity, 0);
@@ -47,7 +51,7 @@ public class SpawnCubes : MonoBehaviour {
             }
         }
         spawnTree(transform.position, Quaternion.identity, 0);
-        print(transform.childCount + " leaves");
+        print(leavesContainer.childCount + " leaves");
     }
 
     Vector3 sphericalToCartesian(float radius, float polar, float elevation) {
@@ -62,21 +66,21 @@ public class SpawnCubes : MonoBehaviour {
     }
 
     GameObject spawnPlatform(Vector3 position, Quaternion orientation) {
-        GameObject platform = Instantiate(Platform, position, orientation, transform);
+        GameObject platform = Instantiate(Platform, position, orientation, leavesContainer);
         return platform;
     }
 
     float avgNumBranches = 4f;
     GameObject spawnTree(Vector3 position, Quaternion orientation, int depth) {
-        float trunkLength = 1400f * Mathf.Pow(2f, -depth) * Random.Range(0.95f, 1.05f);
-        GameObject trunk = Instantiate(Empty, position, orientation, transform);
+        float trunkLength = 1400f * Mathf.Pow(1.85f, -depth) * Random.Range(0.95f, 1.05f);
+        GameObject trunk = Instantiate(Empty, position, orientation, branchesContainer);
         Vector3 trunkStart = trunk.transform.position;
         Vector3 trunkEnd = trunkStart + trunk.transform.up * trunkLength;
-        trunk.transform.localScale = new Vector3(trunkLength / 50f, trunkLength / 2, trunkLength / 50f);
+        trunk.transform.localScale = new Vector3(trunkLength / 25f, trunkLength / 2, trunkLength / 25f);
         trunk.transform.position += trunk.transform.up * trunkLength / 2;
         if (depth > 5) {
             GameObject leaf = spawnPlatform(position, orientation);
-            leaf.transform.position += leaf.transform.up * trunkLength;
+            leaf.transform.position += leaf.transform.up * (trunkLength + leaf.transform.localScale.x);
             int realmId = Random.Range(0, realmPositionsSpherical.Length);
             Color color = colors[Random.Range(0, colors.Count)];
             if (realmId >= 0) {
@@ -89,11 +93,19 @@ public class SpawnCubes : MonoBehaviour {
             return leaf;
         }
         int numBranches = Mathf.RoundToInt(Random.Range(avgNumBranches - 2, avgNumBranches + 2));
+        if (depth == 0) {
+            numBranches = 9;
+        }
         for (int i = 0; i < numBranches; i++) {
-            Vector3 newBranchPos = Vector3.Lerp(trunkStart, trunkEnd, Random.Range(0.7f, 1));
-            Quaternion newBranchOrientation = orientation * Quaternion.AngleAxis(Random.Range(15, 60), Vector3.ProjectOnPlane(Random.onUnitSphere, trunk.transform.up));
+            float lerpVal = Random.Range(0.5f, 1);
+            if (depth == 0) {
+                lerpVal = Random.Range(0.2f, 1);
+            }
+            Vector3 newBranchPos = Vector3.Lerp(trunkStart, trunkEnd, lerpVal);
+            float branchingAngle = (1 - lerpVal) * 80 + Random.Range(0, 30);
+            Quaternion newBranchOrientation = orientation * Quaternion.AngleAxis(branchingAngle, Vector3.ProjectOnPlane(Random.onUnitSphere, trunk.transform.up));
             int newDepth = depth + 1;
-            if (Random.Range(0f, 1f) < 0.025f) {
+            if (Random.Range(0f, 1f) < 0.025f && depth > 1) {
                 newDepth = depth;
             }
             GameObject branch = spawnTree(newBranchPos, newBranchOrientation, newDepth);
