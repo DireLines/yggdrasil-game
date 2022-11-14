@@ -39,7 +39,7 @@ public class SpawnCubes : MonoBehaviour {
         // spawnTree(transform.position + transform.up * 1000, Quaternion.identity, 0);
         // spawnTree(transform.position + transform.up * 2000, Quaternion.identity, 0);
 
-        for (int i = 0; i < realmPositionsSpherical.Length; i++) {
+        for (int i = 0; i < realmPositionsSpherical.Length - 1; i++) {
             Vector3 v = realmPositionsSpherical[i];
             Vector3 vi = sphericalToCartesian(5000f, Mathf.Deg2Rad * v.y, Mathf.Deg2Rad * v.z);
             realmPositions.Add(vi);
@@ -76,7 +76,7 @@ public class SpawnCubes : MonoBehaviour {
         GameObject trunk = Instantiate(Empty, position, orientation, branchesContainer);
         Vector3 trunkStart = trunk.transform.position;
         Vector3 trunkEnd = trunkStart + trunk.transform.up * trunkLength;
-        trunk.transform.localScale = new Vector3(trunkLength / 25f, trunkLength / 2, trunkLength / 25f);
+        trunk.transform.localScale = new Vector3(trunkLength / 40f, trunkLength / 2, trunkLength / 40f);
         trunk.transform.position += trunk.transform.up * trunkLength / 2;
         if (depth > 5) {
             GameObject leaf = spawnPlatform(position, orientation);
@@ -97,12 +97,12 @@ public class SpawnCubes : MonoBehaviour {
             numBranches = 9;
         }
         for (int i = 0; i < numBranches; i++) {
-            float lerpVal = Random.Range(0.5f, 1);
+            float lerpVal = Random.Range(0.45f, 1);
             if (depth == 0) {
                 lerpVal = Random.Range(0.2f, 1);
             }
             Vector3 newBranchPos = Vector3.Lerp(trunkStart, trunkEnd, lerpVal);
-            float branchingAngle = (1 - lerpVal) * 80 + Random.Range(0, 30);
+            float branchingAngle = (1 - lerpVal) * 80 + Random.Range(10, 30);
             Quaternion newBranchOrientation = orientation * Quaternion.AngleAxis(branchingAngle, Vector3.ProjectOnPlane(Random.onUnitSphere, trunk.transform.up));
             int newDepth = depth + 1;
             if (Random.Range(0f, 1f) < 0.025f && depth > 1) {
