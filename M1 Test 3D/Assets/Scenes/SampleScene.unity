@@ -198,6 +198,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3827059872778751429, guid: 391d14f08d9674a46920a46d880e21af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3827059872778751455, guid: 391d14f08d9674a46920a46d880e21af, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -446,7 +450,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063622881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2400, z: 0}
+  m_LocalPosition: {x: 0, y: -2000, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -465,18 +469,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4246b3615b3bc488c9a9d1cc2592ca22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Platform: {fileID: 8397756192709185308, guid: dd38ed1abd304496e86b4e64e12ad1e0, type: 3}
+  Platform: {fileID: 598901293982822685, guid: 4bbde47ac04324b87b842d47c31a3bd2, type: 3}
   Empty: {fileID: 8691711382963812327, guid: 9853502aebb0444279819c704818cbdf, type: 3}
   colors:
-  - {r: 1, g: 0.70400035, b: 0.0990566, a: 1}
-  - {r: 0.6450695, g: 0.8760874, b: 0.9056604, a: 1}
-  - {r: 0.45837474, g: 0.6320754, b: 0.30113026, a: 1}
   - {r: 0.5105098, g: 0.8396226, b: 0.43961373, a: 1}
-  - {r: 0.3147215, g: 0.4528302, b: 0.049127813, a: 1}
-  - {r: 0.8937789, g: 0.9716981, b: 0.9525335, a: 1}
-  - {r: 0.26415092, g: 0.23555796, b: 0.20808114, a: 1}
-  - {r: 0.31545925, g: 0.4811321, b: 0.43990326, a: 1}
   - {r: 0.3679245, g: 0.31824163, b: 0.28635633, a: 1}
+  - {r: 0.6450695, g: 0.8760874, b: 0.9056604, a: 1}
+  - {r: 0.8937789, g: 0.9716981, b: 0.9525335, a: 1}
+  - {r: 0.31132078, g: 0.18576446, b: 0.06020826, a: 1}
+  - {r: 0.3147215, g: 0.4528302, b: 0.049127813, a: 1}
+  - {r: 0.31545925, g: 0.4811321, b: 0.43990326, a: 1}
+  - {r: 1, g: 0.70400035, b: 0.0990566, a: 1}
+  - {r: 0.45837474, g: 0.6320754, b: 0.30113026, a: 1}
 --- !u!1 &1616114181
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0201fa00eda84ccea48dac18771774b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrustStrength: 2
+  thrustStrength: 5
   rotSpeed: 0.6
   rollSpeed: 30
   rotSmoothSpeed: 4
