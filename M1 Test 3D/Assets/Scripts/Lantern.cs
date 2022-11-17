@@ -19,7 +19,6 @@ public class Lantern : MonoBehaviour {
 
 
     }
-    // Update is called once per frame
     void Update() {
         ids.Clear();
         foreach (int id in currentColliders.Keys) {
@@ -33,10 +32,8 @@ public class Lantern : MonoBehaviour {
             int id = collider.gameObject.GetInstanceID();
             if (!currentColliders.ContainsKey(id)) {
                 SetComponentsActive(collider.gameObject, true);
-                currentColliders.Add(id, (collider.gameObject, true));
-            } else {
-                currentColliders[id] = (collider.gameObject, true);
             }
+            currentColliders[id] = (collider.gameObject, true);
         }
         keysToRemove.Clear();
         foreach (int id in currentColliders.Keys) {
