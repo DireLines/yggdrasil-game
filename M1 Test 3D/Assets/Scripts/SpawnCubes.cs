@@ -64,7 +64,6 @@ public class SpawnCubes : MonoBehaviour {
         spawnTree(transform.position, Quaternion.identity, 0);
         print(leavesContainer.childCount + " leaves");
     }
-
     Vector3 sphericalToCartesian(float radius, float polar, float elevation) {
         float a = radius * Mathf.Cos(elevation);
         return new Vector3(a * Mathf.Cos(polar), radius * Mathf.Sin(elevation), a * Mathf.Sin(polar));

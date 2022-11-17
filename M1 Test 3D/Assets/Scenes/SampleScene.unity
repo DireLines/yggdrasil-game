@@ -643,6 +643,7 @@ GameObject:
   - component: {fileID: 1658546074}
   - component: {fileID: 1658546075}
   - component: {fileID: 1658546076}
+  - component: {fileID: 1658546077}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -784,6 +785,19 @@ MonoBehaviour:
   rotSpeed: 0.6
   rollSpeed: 30
   rotSmoothSpeed: 4
+--- !u!114 &1658546077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658546069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6ea720bcb0c4502bd274503514aaf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeRadius: 600
 --- !u!1 &1812381681
 GameObject:
   m_ObjectHideFlags: 0
