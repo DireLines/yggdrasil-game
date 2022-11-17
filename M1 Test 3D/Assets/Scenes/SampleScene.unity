@@ -472,7 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Platform: {fileID: 598901293982822685, guid: 4bbde47ac04324b87b842d47c31a3bd2, type: 3}
-  Empty: {fileID: 5262957323906682897, guid: bc48e8e55295e4b93b4b4d1432df4277, type: 3}
+  Branch: {fileID: 5262957323906682897, guid: bc48e8e55295e4b93b4b4d1432df4277, type: 3}
   colors:
   - {r: 0.5105098, g: 0.8396226, b: 0.43961373, a: 1}
   - {r: 0.3679245, g: 0.31824163, b: 0.28635633, a: 1}
@@ -878,7 +878,7 @@ Transform:
   m_GameObject: {fileID: 1812381681}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.3, z: 0.14999999}
+  m_LocalScale: {x: 0.005, y: 0.01, z: 0.005}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}

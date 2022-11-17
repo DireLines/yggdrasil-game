@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnCubes : MonoBehaviour {
     public GameObject Platform;
-    public GameObject Empty;
+    public GameObject Branch;
     public List<Color> colors = new List<Color>(9);
     string[] realmNames = {
         "asgard",
@@ -27,6 +27,17 @@ public class SpawnCubes : MonoBehaviour {
         new Vector3(1, -110, 45),//alfheim
         new Vector3(1, 125, -30),//muspelheim
         new Vector3(0, 0, 0),//midgard
+    };
+    float[] realmPlatformFrequencies = {
+        8f,//asgard
+        9f,//hel
+        9f,//niflheim
+        15f,//jotunheim
+        13f,//svartalfheim
+        6f,//vanaheim
+        5f,//alfheim
+        6f,//muspelheim
+        15f,//midgard
     };
     List<Vector3> realmPositions;
     Transform branchesContainer;
@@ -73,7 +84,10 @@ public class SpawnCubes : MonoBehaviour {
     float avgNumBranches = 4f;
     GameObject spawnTree(Vector3 position, Quaternion orientation, int depth) {
         float trunkLength = 1400f * Mathf.Pow(1.85f, -depth) * Random.Range(0.95f, 1.05f);
-        GameObject trunk = Instantiate(Empty, position, orientation, branchesContainer);
+        if (depth > 5) {
+            trunkLength *= 0.5f;
+        }
+        GameObject trunk = Instantiate(Branch, position, orientation, branchesContainer);
         Vector3 trunkStart = trunk.transform.position;
         Vector3 trunkEnd = trunkStart + trunk.transform.up * trunkLength;
         trunk.transform.localScale = new Vector3(trunkLength / 40f, trunkLength / 2, trunkLength / 40f);
@@ -81,7 +95,7 @@ public class SpawnCubes : MonoBehaviour {
         if (depth > 5) {
             GameObject leaf = spawnPlatform(position, orientation);
             leaf.transform.position += leaf.transform.up * (trunkLength + leaf.transform.localScale.x);
-            int realmId = Random.Range(0, realmPositionsSpherical.Length);
+            int realmId = RandomIndexWithWeights(realmPlatformFrequencies);
             Color color = colors[Random.Range(0, colors.Count)];
             if (realmId >= 0) {
                 color = colors[realmId];
@@ -109,12 +123,28 @@ public class SpawnCubes : MonoBehaviour {
                 newDepth = depth;
             }
             GameObject branch = spawnTree(newBranchPos, newBranchOrientation, newDepth);
-            // if (!branch.GetComponent<TestScript>()) {
-            //     Destroy(branch);
-            // }
         }
         return trunk;
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.B)) {
+            branchesContainer.gameObject.SetActive(!branchesContainer.gameObject.activeSelf);
+        }
+    }
 
+    int RandomIndexWithWeights(float[] weights) {
+        float total = 0f;
+        foreach (float w in weights) {
+            total += w;
+        }
+        float random = Random.Range(0f, total);
+        int result = 0;
+        float threshold = weights[0];
+        while (random > threshold) {
+            result++;
+            threshold += weights[result];
+        }
+        return result;
+    }
 }
