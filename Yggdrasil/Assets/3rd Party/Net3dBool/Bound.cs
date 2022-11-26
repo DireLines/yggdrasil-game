@@ -36,15 +36,13 @@ Project: https://github.com/MatterHackers/agg-sharp (an included library)
 */
 
 using System;
-using OpenTK.Mathematics;
+// :)ematics;
 
-namespace Net3dBool
-{
+namespace Net3dBool {
     /// <summary>
     /// Representation of a bound - the extremes of a 3d component for each coordinate.
     /// </summary>
-    public class Bound
-    {
+    public class Bound {
         /** maximum from the x coordinate */
         private double XMax;
         /** minimum from the x coordinate */
@@ -70,8 +68,7 @@ namespace Net3dBool
         * @param p2 point relative to the second vertex
         * @param p3 point relative to the third vertex
         */
-        public Bound(Vector3d p1, Vector3d p2, Vector3d p3)
-        {
+        public Bound(Vector3d p1, Vector3d p2, Vector3d p3) {
             XMax = XMin = p1.X;
             YMax = YMin = p1.Y;
             ZMax = ZMin = p1.Z;
@@ -85,14 +82,12 @@ namespace Net3dBool
         * 
         * @param vertices the object vertices
         */
-        public Bound(Vector3d[] vertices)
-        {
+        public Bound(Vector3d[] vertices) {
             XMax = XMin = vertices[0].X;
             YMax = YMin = vertices[0].Y;
             ZMax = ZMin = vertices[0].Z;
 
-            for (int i = 1; i < vertices.Length; i++)
-            {
+            for (int i = 1; i < vertices.Length; i++) {
                 CheckVertex(vertices[i]);
             }
         }
@@ -104,8 +99,7 @@ namespace Net3dBool
         * 
         * @return the string definition
         */
-        public string toString()
-        {
+        public string toString() {
             return "x: " + XMin + " .. " + XMax + "\ny: " + YMin + " .. " + YMax + "\nz: " + ZMin + " .. " + ZMax;
         }
 
@@ -117,14 +111,10 @@ namespace Net3dBool
         * @param bound other bound to make the comparison
         * @return true if they insersect, false otherwise
         */
-        public bool Overlap(Bound bound)
-        {
-            if ((XMin > bound.XMax + EqualityTolerance) || (XMax < bound.XMin - EqualityTolerance) || (YMin > bound.YMax + EqualityTolerance) || (YMax < bound.YMin - EqualityTolerance) || (ZMin > bound.ZMax + EqualityTolerance) || (ZMax < bound.ZMin - EqualityTolerance))
-            {
+        public bool Overlap(Bound bound) {
+            if ((XMin > bound.XMax + EqualityTolerance) || (XMax < bound.XMin - EqualityTolerance) || (YMin > bound.YMax + EqualityTolerance) || (YMax < bound.YMin - EqualityTolerance) || (ZMin > bound.ZMax + EqualityTolerance) || (ZMax < bound.ZMin - EqualityTolerance)) {
                 return false;
-            }
-            else
-            {
+            } else {
                 return true;
             }
         }
@@ -136,32 +126,22 @@ namespace Net3dBool
         * 
         * @param vertex vertex to be tested
         */
-        private void CheckVertex(Vector3d vertex)
-        {
-            if (vertex.X > XMax)
-            {
+        private void CheckVertex(Vector3d vertex) {
+            if (vertex.X > XMax) {
                 XMax = vertex.X;
-            }
-            else if (vertex.X < XMin)
-            {
+            } else if (vertex.X < XMin) {
                 XMin = vertex.X;
             }
 
-            if (vertex.Y > YMax)
-            {
+            if (vertex.Y > YMax) {
                 YMax = vertex.Y;
-            }
-            else if (vertex.Y < YMin)
-            {
+            } else if (vertex.Y < YMin) {
                 YMin = vertex.Y;
             }
 
-            if (vertex.Z > ZMax)
-            {
+            if (vertex.Z > ZMax) {
                 ZMax = vertex.Z;
-            }
-            else if (vertex.Z < ZMin)
-            {
+            } else if (vertex.Z < ZMin) {
                 ZMin = vertex.Z;
             }
         }

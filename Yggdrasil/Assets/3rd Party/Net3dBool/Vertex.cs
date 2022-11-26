@@ -36,15 +36,13 @@ Project: https://github.com/MatterHackers/agg-sharp (an included library)
 */
 
 using System.Collections.Generic;
-using OpenTK.Mathematics;
+// // :)ematics;
 
-namespace Net3dBool
-{
+namespace Net3dBool {
     /// <summary>
     /// Represents of a 3d face vertex.
     /// </summary>
-    public class Vertex
-    {
+    public class Vertex {
         public Vector3d _Position;
         /** references to vertices conected to it by an edge  */
         private List<Vertex> AdjacentVertices;
@@ -61,8 +59,7 @@ namespace Net3dBool
      * 
      * @param position vertex position
      */
-        public Vertex(Vector3d position)
-        {
+        public Vertex(Vector3d position) {
             _Position = position;
 
             AdjacentVertices = new List<Vertex>();
@@ -76,8 +73,7 @@ namespace Net3dBool
         * @param y coordinate on the y axis
         * @param z coordinate on the z axis
         */
-        public Vertex(double x, double y, double z)
-        {
+        public Vertex(double x, double y, double z) {
             _Position.X = x;
             _Position.Y = y;
             _Position.Z = z;
@@ -91,8 +87,7 @@ namespace Net3dBool
         /// </summary>
         /// <param name="position">vertex position</param>
         /// <param name="status">vertex status - UNKNOWN, BOUNDARY, INSIDE or OUTSIDE</param>
-        public Vertex(Vector3d position, Status status)
-        {
+        public Vertex(Vector3d position, Status status) {
             _Position.X = position.X;
             _Position.Y = position.Y;
             _Position.Z = position.Z;
@@ -108,8 +103,7 @@ namespace Net3dBool
         /// <param name="y">coordinate on the y axis</param>
         /// <param name="z">coordinate on the z axis</param>
         /// <param name="status">vertex status - UNKNOWN, BOUNDARY, INSIDE or OUTSIDE</param>
-        public Vertex(double x, double y, double z, Status status)
-        {
+        public Vertex(double x, double y, double z, Status status) {
             _Position = new Vector3d(x, y, z);
 
             AdjacentVertices = new List<Vertex>();
@@ -119,22 +113,19 @@ namespace Net3dBool
         /// <summary>
         /// Default constructor
         /// </summary>
-        private Vertex()
-        {
+        private Vertex() {
         }
 
         /// <summary>
         /// Clones the vertex object
         /// </summary>
         /// <returns>cloned vertex object</returns>
-        public Vertex Clone()
-        {
+        public Vertex Clone() {
             Vertex clone = new Vertex();
             clone._Position = _Position;
             clone._Status = _Status;
             clone.AdjacentVertices = new List<Vertex>();
-            for (int i = 0; i < AdjacentVertices.Count; i++)
-            {
+            for (int i = 0; i < AdjacentVertices.Count; i++) {
                 clone.AdjacentVertices.Add(AdjacentVertices[i].Clone());
             }
 
@@ -146,8 +137,7 @@ namespace Net3dBool
         * 
         * @return the string definition
         */
-        public override string ToString()
-        {
+        public override string ToString() {
             return "(" + _Position.X + ", " + _Position.Y + ", " + _Position.Z + ")";
         }
 
@@ -158,8 +148,7 @@ namespace Net3dBool
         * @param anObject the other vertex to be tested
         * @return true if they are equal, false otherwise. 
         */
-        public bool Equals(Vertex vertex)
-        {
+        public bool Equals(Vertex vertex) {
             return _Position.Equals(vertex._Position, EqualityTolerance);
         }
 
@@ -170,10 +159,8 @@ namespace Net3dBool
         * 
         * @param status vertex status - UNKNOWN, BOUNDARY, INSIDE or OUTSIDE
         */
-        public void SetStatus(Status status)
-        {
-            if (status >= Status.UNKNOWN && status <= Status.BOUNDARY)
-            {
+        public void SetStatus(Status status) {
+            if (status >= Status.UNKNOWN && status <= Status.BOUNDARY) {
                 _Status = status;
             }
         }
@@ -192,8 +179,7 @@ namespace Net3dBool
         * 
         * @return array of the adjacent vertices 
         */
-        public Vertex[] GetAdjacentVertices()
-        {
+        public Vertex[] GetAdjacentVertices() {
             Vertex[] vertices = new Vertex[AdjacentVertices.Count];
             for (int i = 0; i < AdjacentVertices.Count; i++)
                 vertices[i] = AdjacentVertices[i];
@@ -214,8 +200,7 @@ namespace Net3dBool
         * 
         * @param adjacentVertex an adjacent vertex
         */
-        public void AddAdjacentVertex(Vertex adjacentVertex)
-        {
+        public void AddAdjacentVertex(Vertex adjacentVertex) {
             if (!AdjacentVertices.Contains(adjacentVertex))
                 AdjacentVertices.Add(adjacentVertex);
         }
@@ -225,8 +210,7 @@ namespace Net3dBool
         * 
         * @param status new status to be set
         */
-        public void Mark(Status status)
-        {
+        public void Mark(Status status) {
             //mark vertex
             _Status = status;
 

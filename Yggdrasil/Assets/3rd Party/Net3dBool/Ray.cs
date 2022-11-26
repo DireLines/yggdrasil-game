@@ -37,18 +37,16 @@ either expressed or implied, of the FreeBSD Project.
 */
 
 using System;
-using OpenTK.Mathematics;
+// :)ematics;
 
-namespace Net3dBool
-{
+namespace Net3dBool {
     [Flags]
     public enum IntersectionType { None = 0, FrontFace = 1, BackFace = 2, Both = FrontFace | BackFace };
 
     /// <summary>
     /// a virtual ray that is casted from a begin Position in a certain Direction.
     /// </summary>
-    public class Ray
-    {
+    public class Ray {
         public static double SameSurfaceOffset = .00001;
 
         public Vector3d Origin;
@@ -63,22 +61,20 @@ namespace Net3dBool
 
         public RaySign[] Sign = new RaySign[3];
 
-        public Ray(Vector3d origin, Vector3d directionNormal, double minDistanceToConsider = 0, double maxDistanceToConsider = double.PositiveInfinity, IntersectionType intersectionType = IntersectionType.FrontFace)
-        {
+        public Ray(Vector3d origin, Vector3d directionNormal, double minDistanceToConsider = 0, double maxDistanceToConsider = double.PositiveInfinity, IntersectionType intersectionType = IntersectionType.FrontFace) {
             Origin = origin;
             DirectionNormal = directionNormal;
             MinDistanceToConsider = minDistanceToConsider;
             MaxDistanceToConsider = maxDistanceToConsider;
             IntersectionType = intersectionType;
-            OneOverDirection = Vector3d.Divide(new Vector3d(1),directionNormal);
+            OneOverDirection = Vector3d.Divide(new Vector3d(1.0, 1.0, 1.0), directionNormal);
 
             Sign[0] = (OneOverDirection.X < 0) ? RaySign.negative : RaySign.positive;
             Sign[1] = (OneOverDirection.Y < 0) ? RaySign.negative : RaySign.positive;
             Sign[2] = (OneOverDirection.Z < 0) ? RaySign.negative : RaySign.positive;
         }
 
-        public Ray(Ray rayToCopy)
-        {
+        public Ray(Ray rayToCopy) {
             Origin = rayToCopy.Origin;
             DirectionNormal = rayToCopy.DirectionNormal;
             MinDistanceToConsider = rayToCopy.MinDistanceToConsider;
@@ -91,8 +87,7 @@ namespace Net3dBool
             Sign[2] = rayToCopy.Sign[2];
         }
 
-        public bool Intersection(AxisAlignedBoundingBox bounds)
-        {
+        public bool Intersection(AxisAlignedBoundingBox bounds) {
             Ray ray = this;
             // we calculate distance to the intersection with the x planes of the box
             double minDistFound = (bounds[(int)ray.Sign[0]].X - ray.Origin.X) * ray.OneOverDirection.X;
@@ -102,18 +97,15 @@ namespace Net3dBool
             double minDistToY = (bounds[(int)ray.Sign[1]].Y - ray.Origin.Y) * ray.OneOverDirection.Y;
             double maxDistToY = (bounds[1 - (int)ray.Sign[1]].Y - ray.Origin.Y) * ray.OneOverDirection.Y;
 
-            if ((minDistFound > maxDistToY) || (minDistToY > maxDistFound))
-            {
+            if ((minDistFound > maxDistToY) || (minDistToY > maxDistFound)) {
                 return false;
             }
 
-            if (minDistToY > minDistFound)
-            {
+            if (minDistToY > minDistFound) {
                 minDistFound = minDistToY;
             }
 
-            if (maxDistToY < maxDistFound)
-            {
+            if (maxDistToY < maxDistFound) {
                 maxDistFound = maxDistToY;
             }
 
@@ -121,18 +113,15 @@ namespace Net3dBool
             double minDistToZ = (bounds[(int)ray.Sign[2]].Z - ray.Origin.Z) * ray.OneOverDirection.Z;
             double maxDistToZ = (bounds[1 - (int)ray.Sign[2]].Z - ray.Origin.Z) * ray.OneOverDirection.Z;
 
-            if ((minDistFound > maxDistToZ) || (minDistToZ > maxDistFound))
-            {
+            if ((minDistFound > maxDistToZ) || (minDistToZ > maxDistFound)) {
                 return false;
             }
 
-            if (minDistToZ > minDistFound)
-            {
+            if (minDistToZ > minDistFound) {
                 minDistFound = minDistToZ;
             }
 
-            if (maxDistToZ < maxDistFound)
-            {
+            if (maxDistToZ < maxDistFound) {
                 maxDistFound = maxDistToZ;
             }
 

@@ -1,6 +1,6 @@
 ﻿
 
-using OpenTK.Mathematics;
+// :)ematics;
 /** 
 * Sample Objects
 * 
@@ -14,10 +14,8 @@ using OpenTK.Mathematics;
 * Ported from Java to C# by Sebastian Loncar, Web: http://loncar.de
 * Project: https://github.com/Arakis/Net3dBool
 */
-namespace Net3dBool
-{
-    public class DefaultCoordinates
-    {
+namespace Net3dBool {
+    public class DefaultCoordinates {
         public static Vector3d[] DEFAULT_BOX_VERTICES = new Vector3d[]
         {
             new Vector3d(-0.5, -0.5, -0.5),
@@ -26,7 +24,7 @@ namespace Net3dBool
             new Vector3d(0.5, 0.5, -0.5),
             new Vector3d(-0.5, -0.5, 0.5),
             new Vector3d(0.5, -0.5, 0.5),
-            new Vector3d(-0.5, 0.5, 0.5),    
+            new Vector3d(-0.5, 0.5, 0.5),
             new Vector3d(0.5, 0.5, 0.5)
         };
 
@@ -485,7 +483,7 @@ namespace Net3dBool
             145, 141, 142,
             145, 142, 143,
             145, 143, 144,
-            145, 144, 121   
+            145, 144, 121
         };
 
         public static Vector3d[] DEFAULT_CYLINDER_VERTICES = new Vector3d[]
@@ -599,7 +597,7 @@ namespace Net3dBool
             new Vector3d(0.5, -0.5, -0.866),
             new Vector3d(0.766, -0.5, -0.6428),
             new Vector3d(0.9397, -0.5, -0.342),
-            new Vector3d(0.0, -0.5, -0.0)    
+            new Vector3d(0.0, -0.5, -0.0)
         };
 
         public static int[] DEFAULT_CYLINDER_COORDINATES = new int[]
@@ -819,7 +817,7 @@ namespace Net3dBool
             109, 105, 106,
             109, 106, 107,
             109, 107, 108,
-            109, 108, 91            
+            109, 108, 91
         };
 
         public static Vector3d[] DEFAULT_SPHERE_VERTICES = new Vector3d[]

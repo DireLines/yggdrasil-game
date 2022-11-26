@@ -36,15 +36,13 @@ Project: https://github.com/MatterHackers/agg-sharp (an included library)
 */
 
 using System;
-using OpenTK.Mathematics;
+// :)ematics;
 
-namespace Net3dBool
-{
+namespace Net3dBool {
     /// <summary>
     /// Class representing a 3D solid.
     /// </summary>
-    public class Solid
-    {
+    public class Solid {
         /** array of indices for the vertices from the 'vertices' attribute */
         protected int[] Indices;
         /** array of points defining the solid's vertices */
@@ -53,8 +51,7 @@ namespace Net3dBool
         //--------------------------------CONSTRUCTORS----------------------------------//
 
         /** Constructs an empty solid. */
-        public Solid()
-        {
+        public Solid() {
             SetInitialFeatures();
         }
 
@@ -68,14 +65,12 @@ namespace Net3dBool
         * @param colors array of colors defining the vertices colors 
         */
         public Solid(Vector3d[] vertices, int[] indices)
-            : this()
-        {
+            : this() {
             SetData(vertices, indices);
         }
 
         /** Sets the initial features common to all constructors */
-        protected void SetInitialFeatures()
-        {
+        protected void SetInitialFeatures() {
             Vertices = new Vector3d[0];
             Indices = new int[0];
 
@@ -91,11 +86,9 @@ namespace Net3dBool
         * 
         * @return solid vertices
         */
-        public Vector3d[] GetVertices()
-        {
+        public Vector3d[] GetVertices() {
             Vector3d[] newVertices = new Vector3d[Vertices.Length];
-            for (int i = 0; i < newVertices.Length; i++)
-            {
+            for (int i = 0; i < newVertices.Length; i++) {
                 newVertices[i] = Vertices[i];
             }
             return newVertices;
@@ -105,8 +98,7 @@ namespace Net3dBool
         * 
         * @return solid indices for its vertices
         */
-        public int[] GetIndices()
-        {
+        public int[] GetIndices() {
             int[] newIndices = new int[Indices.Length];
             Array.Copy(Indices, 0, newIndices, 0, Indices.Length);
             return newIndices;
@@ -130,14 +122,11 @@ namespace Net3dBool
         * @param indices array of indices for a array of vertices
         * @param colors array of colors defining the vertices colors 
         */
-        public void SetData(Vector3d[] vertices, int[] indices)
-        {
+        public void SetData(Vector3d[] vertices, int[] indices) {
             Vertices = new Vector3d[vertices.Length];
             Indices = new int[indices.Length];
-            if (indices.Length != 0)
-            {
-                for (int i = 0; i < vertices.Length; i++)
-                {
+            if (indices.Length != 0) {
+                for (int i = 0; i < vertices.Length; i++) {
                     Vertices[i] = vertices[i];
                 }
                 Array.Copy(indices, 0, Indices, 0, indices.Length);
@@ -154,12 +143,9 @@ namespace Net3dBool
         * @param dx translation on the x axis
         * @param dy translation on the y axis
         */
-        public void Translate(double dx, double dy)
-        {
-            if (dx != 0 || dy != 0)
-            {
-                for (int i = 0; i < Vertices.Length; i++)
-                {
+        public void Translate(double dx, double dy) {
+            if (dx != 0 || dy != 0) {
+                for (int i = 0; i < Vertices.Length; i++) {
                     Vertices[i].X += dx;
                     Vertices[i].Y += dy;
                 }
@@ -174,28 +160,24 @@ namespace Net3dBool
         * @param dx rotation on the x axis
         * @param dy rotation on the y axis
         */
-        public void Rotate(double dx, double dy)
-        {
+        public void Rotate(double dx, double dy) {
             double cosX = Math.Cos(dx);
             double cosY = Math.Cos(dy);
             double sinX = Math.Sin(dx);
             double sinY = Math.Sin(dy);
 
-            if (dx != 0 || dy != 0)
-            {
+            if (dx != 0 || dy != 0) {
                 //get mean
                 Vector3d mean = GetMean();
 
                 double newX, newY, newZ;
-                for (int i = 0; i < Vertices.Length; i++)
-                {
+                for (int i = 0; i < Vertices.Length; i++) {
                     Vertices[i].X -= mean.X;
                     Vertices[i].Y -= mean.Y;
                     Vertices[i].Z -= mean.Z;
 
                     //x rotation
-                    if (dx != 0)
-                    {
+                    if (dx != 0) {
                         newY = Vertices[i].Y * cosX - Vertices[i].Z * sinX;
                         newZ = Vertices[i].Y * sinX + Vertices[i].Z * cosX;
                         Vertices[i].Y = newY;
@@ -203,8 +185,7 @@ namespace Net3dBool
                     }
 
                     //y rotation
-                    if (dy != 0)
-                    {
+                    if (dy != 0) {
                         newX = Vertices[i].X * cosY + Vertices[i].Z * sinY;
                         newZ = -Vertices[i].X * sinY + Vertices[i].Z * cosY;
                         Vertices[i].X = newX;
@@ -225,12 +206,9 @@ namespace Net3dBool
         * 
         * @param dz translation on the z axis
         */
-        public void Zoom(double dz)
-        {
-            if (dz != 0)
-            {
-                for (int i = 0; i < Vertices.Length; i++)
-                {
+        public void Zoom(double dz) {
+            if (dz != 0) {
+                for (int i = 0; i < Vertices.Length; i++) {
                     Vertices[i].Z += dz;
                 }
 
@@ -245,10 +223,8 @@ namespace Net3dBool
         * @param dy scale changing for the y axis
         * @param dz scale changing for the z axis
         */
-        public void Scale(double dx, double dy, double dz)
-        {
-            for (int i = 0; i < Vertices.Length; i++)
-            {
+        public void Scale(double dx, double dy, double dz) {
+            for (int i = 0; i < Vertices.Length; i++) {
                 Vertices[i].X *= dx;
                 Vertices[i].Y *= dy;
                 Vertices[i].Z *= dz;
@@ -260,8 +236,7 @@ namespace Net3dBool
         //-----------------------------------PRIVATES--------------------------------//
 
         /** Creates a geometry based on the indexes and vertices set for the solid */
-        protected void DefineGeometry()
-        {
+        protected void DefineGeometry() {
             //            GeometryInfo gi = new GeometryInfo(GeometryInfo.TRIANGLE_ARRAY);
             //            gi.setCoordinateIndices(indices);
             //            gi.setCoordinates(vertices);
@@ -280,11 +255,9 @@ namespace Net3dBool
         * 
         * @return point representing the mean
         */
-        protected Vector3d GetMean()
-        {
+        protected Vector3d GetMean() {
             Vector3d mean = new Vector3d();
-            for (int i = 0; i < Vertices.Length; i++)
-            {
+            for (int i = 0; i < Vertices.Length; i++) {
                 mean.X += Vertices[i].X;
                 mean.Y += Vertices[i].Y;
                 mean.Z += Vertices[i].Z;

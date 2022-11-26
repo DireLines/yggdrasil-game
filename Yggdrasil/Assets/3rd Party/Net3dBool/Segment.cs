@@ -35,15 +35,13 @@ Optimized and refactored by: Lars Brubaker (larsbrubaker@matterhackers.com)
 Project: https://github.com/MatterHackers/agg-sharp (an included library)
 */
 
-using OpenTK.Mathematics;
+// // :)ematics;
 
-namespace Net3dBool
-{
+namespace Net3dBool {
     /// <summary>
     /// Represents a line segment resulting from a intersection of a face and a plane.
     /// </summary>
-    public class Segment
-    {
+    public class Segment {
         /** line resulting from the two planes intersection */
         private Line Line;
         /** shows how many ends were already defined */
@@ -92,67 +90,55 @@ namespace Net3dBool
         * @param sign2 position of the face vertex1 relative to the plane (-1 behind, 1 front, 0 on)
         * @param sign3 position of the face vertex1 relative to the plane (-1 behind, 1 front, 0 on)  
         */
-        public Segment(Line line, Face face, int sign1, int sign2, int sign3)
-        {
+        public Segment(Line line, Face face, int sign1, int sign2, int sign3) {
             Line = line;
             _Index = 0;
 
             //VERTEX is an end
-            if (sign1 == 0)
-            {
+            if (sign1 == 0) {
                 SetVertex(face.V1);
                 //other vertices on the same side - VERTEX-VERTEX VERTEX
-                if (sign2 == sign3)
-                {
+                if (sign2 == sign3) {
                     SetVertex(face.V1);
                 }
             }
 
             //VERTEX is an end
-            if (sign2 == 0)
-            {
+            if (sign2 == 0) {
                 SetVertex(face.V2);
                 //other vertices on the same side - VERTEX-VERTEX VERTEX
-                if (sign1 == sign3)
-                {
+                if (sign1 == sign3) {
                     SetVertex(face.V2);
                 }
             }
 
             //VERTEX is an end
-            if (sign3 == 0)
-            {
+            if (sign3 == 0) {
                 SetVertex(face.V3);
                 //other vertices on the same side - VERTEX-VERTEX VERTEX
-                if (sign1 == sign2)
-                {
+                if (sign1 == sign2) {
                     SetVertex(face.V3);
                 }
             }
 
             //There are undefined ends - one or more edges cut the planes intersection line
-            if (NumEndsSet != 2)
-            {
+            if (NumEndsSet != 2) {
                 //EDGE is an end
-                if ((sign1 == 1 && sign2 == -1) || (sign1 == -1 && sign2 == 1))
-                {
+                if ((sign1 == 1 && sign2 == -1) || (sign1 == -1 && sign2 == 1)) {
                     SetEdge(face.V1, face.V2);
                 }
                 //EDGE is an end
-                if ((sign2 == 1 && sign3 == -1) || (sign2 == -1 && sign3 == 1))
-                {
+                if ((sign2 == 1 && sign3 == -1) || (sign2 == -1 && sign3 == 1)) {
                     SetEdge(face.V2, face.V3);
                 }
                 //EDGE is an end
-                if ((sign3 == 1 && sign1 == -1) || (sign3 == -1 && sign1 == 1))
-                {
+                if ((sign3 == 1 && sign1 == -1) || (sign3 == -1 && sign1 == 1)) {
                     SetEdge(face.V3, face.V1);
                 }
             }
         }
 
-        private Segment()
-        {
+        private Segment() {
         }
 
         //-----------------------------------OVERRIDES----------------------------------//
@@ -162,8 +148,7 @@ namespace Net3dBool
         * 
         * @return cloned Segment object
         */
-        public Segment Clone()
-        {
+        public Segment Clone() {
             Segment clone = new Segment();
             clone.Line = Line;
             clone._Index = _Index;
@@ -253,14 +238,10 @@ namespace Net3dBool
         * @param segment the other segment to check the intesection
         * @return true if the segments intersect, false otherwise
         */
-        public bool Intersect(Segment segment)
-        {
-            if (_EndDist < segment.StartDist + TOL || segment._EndDist < StartDist + TOL)
-            {
+        public bool Intersect(Segment segment) {
+            if (_EndDist < segment.StartDist + TOL || segment._EndDist < StartDist + TOL) {
                 return false;
-            }
-            else
-            {
+            } else {
                 return true;
             }
         }
@@ -273,11 +254,9 @@ namespace Net3dBool
         * @param vertex the vertex that is an segment end 
         * @return false if all the ends were already defined, true otherwise
         */
-        private bool SetVertex(Vertex vertex)
-        {
+        private bool SetVertex(Vertex vertex) {
             //none end were defined - define starting point as VERTEX
-            if (_Index == 0)
-            {
+            if (_Index == 0) {
                 _StartVertex = vertex;
                 _StartType = VERTEX;
                 StartDist = Line.ComputePointToPointDistance(vertex.Position);
@@ -286,8 +265,7 @@ namespace Net3dBool
                 return true;
             }
             //starting point were defined - define ending point as VERTEX
-            if (_Index == 1)
-            {
+            if (_Index == 1) {
                 _EndVertex = vertex;
                 _EndType = VERTEX;
                 _EndDist = Line.ComputePointToPointDistance(vertex.Position);
@@ -296,26 +274,21 @@ namespace Net3dBool
 
                 //defining middle based on the starting point
                 //VERTEX-VERTEX-VERTEX
-                if (_StartVertex.Equals(_EndVertex))
-                {
+                if (_StartVertex.Equals(_EndVertex)) {
                     _MiddleType = VERTEX;
                 }
                 //VERTEX-EDGE-VERTEX
-                else if (_StartType == VERTEX)
-                {
+                else if (_StartType == VERTEX) {
                     _MiddleType = EDGE;
                 }
 
                 //the ending point distance should be smaller than  starting point distance 
-                if (StartDist > _EndDist)
-                {
+                if (StartDist > _EndDist) {
                     SwapEnds();
                 }
 
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -327,15 +300,13 @@ namespace Net3dBool
         * @param vertex2 one of the vertices of the intercepted edge
         * @return false if all ends were already defined, true otherwise
         */
-        private bool SetEdge(Vertex vertex1, Vertex vertex2)
-        {
+        private bool SetEdge(Vertex vertex1, Vertex vertex2) {
             Vector3d point1 = vertex1.Position;
             Vector3d point2 = vertex2.Position;
             Vector3d edgeDirection = new Vector3d(point2.X - point1.X, point2.Y - point1.Y, point2.Z - point1.Z);
             Line edgeLine = new Line(edgeDirection, point1);
 
-            if (_Index == 0)
-            {
+            if (_Index == 0) {
                 _StartVertex = vertex1;
                 _StartType = EDGE;
                 _StartPos = Line.ComputeLineIntersection(edgeLine);
@@ -343,9 +314,7 @@ namespace Net3dBool
                 _MiddleType = FACE;
                 _Index++;
                 return true;
-            }
-            else if (_Index == 1)
-            {
+            } else if (_Index == 1) {
                 _EndVertex = vertex1;
                 _EndType = EDGE;
                 _EndPos = Line.ComputeLineIntersection(edgeLine);
@@ -354,22 +323,18 @@ namespace Net3dBool
                 _Index++;
 
                 //the ending point distance should be smaller than  starting point distance 
-                if (StartDist > _EndDist)
-                {
+                if (StartDist > _EndDist) {
                     SwapEnds();
                 }
 
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
 
         /** Swaps the starting point and the ending point */
-        private void SwapEnds()
-        {
+        private void SwapEnds() {
             double distTemp = StartDist;
             StartDist = _EndDist;
             _EndDist = distTemp;
