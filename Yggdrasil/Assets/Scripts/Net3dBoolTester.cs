@@ -24,20 +24,20 @@ public class Net3dBoolTester : MonoBehaviour {
         DefaultCoordinates.DEFAULT_SPHERE_COORDINATES);
         sphere.Scale(0.68f, 0.68f, 0.68f);
 
-        var cylinder1 = new Solid(DefaultCoordinates.DEFAULT_CYLINDER_VERTICES,
-        DefaultCoordinates.DEFAULT_CYLINDER_COORDINATES);
-        cylinder1.Scale(0.38f, 1f, 0.38f);
+        // var cylinder1 = new Solid(DefaultCoordinates.DEFAULT_CYLINDER_VERTICES,
+        // DefaultCoordinates.DEFAULT_CYLINDER_COORDINATES);
+        // cylinder1.Scale(0.38f, 1f, 0.38f);
 
-        var cylinder2 = new Solid(DefaultCoordinates.DEFAULT_CYLINDER_VERTICES,
-        DefaultCoordinates.DEFAULT_CYLINDER_COORDINATES);
-        cylinder2.Scale(0.38f, 1, 0.38f);
-        cylinder2.Rotate(Mathf.PI / 2f, 0);
+        // var cylinder2 = new Solid(DefaultCoordinates.DEFAULT_CYLINDER_VERTICES,
+        // DefaultCoordinates.DEFAULT_CYLINDER_COORDINATES);
+        // cylinder2.Scale(0.38f, 1, 0.38f);
+        // cylinder2.Rotate(Mathf.PI / 2f, 0);
 
-        var cylinder3 = new Solid(DefaultCoordinates.DEFAULT_CYLINDER_VERTICES,
-        DefaultCoordinates.DEFAULT_CYLINDER_COORDINATES);
-        cylinder3.Scale(0.38f, 1f, 0.38f);
-        cylinder3.Rotate(Mathf.PI / 2f, 0f);
-        cylinder3.Rotate(0f, Mathf.PI / 2f);
+        // var cylinder3 = new Solid(DefaultCoordinates.DEFAULT_CYLINDER_VERTICES,
+        // DefaultCoordinates.DEFAULT_CYLINDER_COORDINATES);
+        // cylinder3.Scale(0.38f, 1f, 0.38f);
+        // cylinder3.Rotate(Mathf.PI / 2f, 0f);
+        // cylinder3.Rotate(0f, Mathf.PI / 2f);
 
         //--
 
@@ -53,14 +53,14 @@ public class Net3dBoolTester : MonoBehaviour {
         var modeller = new BooleanModeller(box, sphere);
         var tmp = modeller.GetIntersection();
 
-        modeller = new BooleanModeller(tmp, cylinder1);
-        tmp = modeller.GetDifference();
+        // modeller = new BooleanModeller(tmp, cylinder1);
+        // tmp = modeller.GetDifference();
 
-        modeller = new BooleanModeller(tmp, cylinder2);
-        tmp = modeller.GetDifference();
+        // modeller = new BooleanModeller(tmp, cylinder2);
+        // tmp = modeller.GetDifference();
 
-        modeller = new BooleanModeller(tmp, cylinder3);
-        tmp = modeller.GetDifference();
+        // modeller = new BooleanModeller(tmp, cylinder3);
+        // tmp = modeller.GetDifference();
 
         mesh = tmp;
 
