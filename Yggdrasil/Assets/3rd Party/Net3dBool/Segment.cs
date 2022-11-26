@@ -35,7 +35,6 @@ Optimized and refactored by: Lars Brubaker (larsbrubaker@matterhackers.com)
 Project: https://github.com/MatterHackers/agg-sharp (an included library)
 */
 
-// // :)ematics;
 
 namespace Net3dBool {
     /// <summary>

@@ -1,6 +1,5 @@
 ﻿
 
-// :)ematics;
 /** 
 * Sample Objects
 * 

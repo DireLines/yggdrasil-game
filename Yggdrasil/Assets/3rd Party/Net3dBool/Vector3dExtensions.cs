@@ -1,5 +1,4 @@
 
-// // :)ematics;
 
 namespace Net3dBool {
     public static class Vector3dExtensions {

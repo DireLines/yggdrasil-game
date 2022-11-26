@@ -36,7 +36,6 @@ Project: https://github.com/MatterHackers/agg-sharp (an included library)
 */
 
 using System;
-// :)ematics;
 
 namespace Net3dBool {
     public enum Status { UNKNOWN, INSIDE, OUTSIDE, SAME, OPPOSITE, BOUNDARY };

@@ -37,7 +37,6 @@ either expressed or implied, of the FreeBSD Project.
 */
 
 using System;
-// :)ematics;
 
 namespace Net3dBool {
     [Flags]
