@@ -13,8 +13,7 @@ public class CarveShape : MonoBehaviour {
     Solid ToSolid(GameObject obj) {
         Mesh m = obj.GetComponent<MeshFilter>().mesh;
         Transform t = obj.transform;
-        var solid = new Solid(m.vertices.Select(ToVector3d).ToArray(), m.GetIndices(0));
-        solid.Scale(ToVector3d(t.localScale));
+        var solid = new Solid(m.vertices.Select(t.TransformVector).Select(ToVector3d).ToArray(), m.GetIndices(0));
         solid.Translate(ToVector3d(t.position));
         return solid;
     }
@@ -22,6 +21,9 @@ public class CarveShape : MonoBehaviour {
     public void Start() {
         var carvingShape = ToSolid(carvingObject);
         var carvedShape = ToSolid(carvedObject);
+        foreach (Vector3d v in carvedShape.GetVertices()) {
+            print(v);
+        }
 
         var modeller = new BooleanModeller(carvingShape, carvedShape);
         var intersection = modeller.GetIntersection();
