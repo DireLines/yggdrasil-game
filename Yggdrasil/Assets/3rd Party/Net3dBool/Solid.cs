@@ -36,6 +36,7 @@ Project: https://github.com/MatterHackers/agg-sharp (an included library)
 */
 
 using System;
+using UnityEngine;
 
 namespace Net3dBool {
     /// <summary>
@@ -142,15 +143,18 @@ namespace Net3dBool {
         * @param dx translation on the x axis
         * @param dy translation on the y axis
         */
-        public void Translate(double dx, double dy) {
-            if (dx != 0 || dy != 0) {
-                for (int i = 0; i < Vertices.Length; i++) {
-                    Vertices[i].X += dx;
-                    Vertices[i].Y += dy;
-                }
-
-                DefineGeometry();
+        public void Translate(double dx, double dy, double dz) {
+            for (int i = 0; i < Vertices.Length; i++) {
+                Vertices[i].X += dx;
+                Vertices[i].Y += dy;
+                Vertices[i].Z += dz;
             }
+
+            DefineGeometry();
+        }
+
+        public void Translate(Vector3d v) {
+            Translate(v.X, v.Y, v.Z);
         }
 
         /**
@@ -230,6 +234,10 @@ namespace Net3dBool {
             }
 
             DefineGeometry();
+        }
+
+        public void Scale(Vector3d scale) {
+            Scale(scale.X, scale.Y, scale.Z);
         }
 
         //-----------------------------------PRIVATES--------------------------------//
