@@ -21,9 +21,6 @@ public class CarveShape : MonoBehaviour {
     public void Start() {
         var carvingShape = ToSolid(carvingObject);
         var carvedShape = ToSolid(carvedObject);
-        foreach (Vector3d v in carvedShape.GetVertices()) {
-            print(v);
-        }
 
         var modeller = new BooleanModeller(carvingShape, carvedShape);
         var intersection = modeller.GetIntersection();
