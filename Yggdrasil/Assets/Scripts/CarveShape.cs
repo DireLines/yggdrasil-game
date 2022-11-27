@@ -7,7 +7,7 @@ using System.Linq;
 public class CarveShape : MonoBehaviour {
     public GameObject carvingObject;
     public GameObject carvedObject;
-    public Solid mesh;
+    Solid mesh;
     public Material ObjMaterial;
 
     Solid ToSolid(GameObject obj) {
@@ -23,32 +23,20 @@ public class CarveShape : MonoBehaviour {
         var carvingShape = ToSolid(carvingObject);
         var carvedShape = ToSolid(carvedObject);
 
-        //--
-
-        //mesh = s;
-
-        //--
-
-        // var modeller = new BooleanModeller(b, c1);
-        // mesh = modeller.getDifference();
-
-        //--
-
         var modeller = new BooleanModeller(carvingShape, carvedShape);
-        var tmp = modeller.GetIntersection();
+        var intersection = modeller.GetIntersection();
+        intersection.Translate(ToVector3d(-carvingObject.transform.position));
 
-        mesh = tmp;
-
-        MeshFilter mf = gameObject.AddComponent<MeshFilter>();
+        Vector3[] vertices = intersection.GetVertices().Select(ToUnityVector).ToArray();
+        int[] indices = intersection.GetIndices();
         Mesh tmesh = new Mesh();
-        Vector3[] vertices = mesh.GetVertices().Select(ToUnityVector).ToArray();
         tmesh.vertices = vertices;
-
-        tmesh.triangles = mesh.GetIndices();
-
+        tmesh.triangles = indices;
         tmesh.RecalculateBounds();
         tmesh.RecalculateNormals();
         tmesh.Optimize();
+
+        MeshFilter mf = gameObject.AddComponent<MeshFilter>();
         mf.mesh = tmesh;
 
         MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
