@@ -12,9 +12,60 @@ public class CarveShape : MonoBehaviour {
     Solid mesh;
 
     Solid ToSolid(GameObject obj) {
-        Mesh m = obj.GetComponent<MeshFilter>().mesh;
+        Mesh m;
+        Solid solid;
         Transform t = obj.transform;
-        var solid = new Solid(m.vertices.Select(t.TransformVector).Select(ToVector3d).ToArray(), m.GetIndices(0));
+
+        if (obj.GetComponent<MeshFilter>())
+        {
+            m = obj.GetComponent<MeshFilter>().mesh;
+            solid = new Solid(m.vertices.Select(t.TransformVector).Select(ToVector3d).ToArray(), m.GetIndices(0));
+        }
+        else if (obj.GetComponent<Terrain>())
+        {
+            var terrain = obj.GetComponent<Terrain>();
+            var terrainData = terrain.terrainData;
+            var resolution = terrainData.heightmapResolution;
+            var heightMap = terrainData.GetHeights(0, 0, resolution, resolution);
+            
+            // Todo: Get these actual values
+            var xStep = 1000f / resolution;
+            var yStep = 1000f / resolution;
+            var terrainHeight = 600f; 
+            
+            List<Vector3> vertices = new List<Vector3>();
+            for (int y = 0; y < resolution; y++)
+            {
+                for (int x = 0; x < resolution; x++)
+                {
+                    var xPos = x * xStep;
+                    var yPos = y * yStep;
+                    var zPos = heightMap[x, y] * terrainHeight;
+                    vertices.Add(new Vector3(xPos, yPos, zPos));
+                }
+            }
+
+            List<int> triangles = new List<int>();
+            for (int i = 0; i < vertices.Count - resolution; i++)
+            {
+                if (i % resolution == resolution - 1) continue; // Skip over last row and column
+
+                // Must be clockwise for normals to be correctly oriented
+                triangles.Add(i);
+                triangles.Add(i + 1);
+                triangles.Add(i + resolution);
+                triangles.Add(i + 1);
+                triangles.Add(i + resolution + 1);
+                triangles.Add(i + resolution);
+            }
+
+            solid = new Solid(vertices.Select(t.TransformVector).Select(ToVector3d).ToArray(), triangles.ToArray());
+        } 
+        else
+        {
+            return null;
+        }
+
         solid.Translate(ToVector3d(t.position));
         return solid;
     }
