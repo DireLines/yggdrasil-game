@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Net3dBool;
 
 public class SpawnCubes : MonoBehaviour {
     public GameObject Platform;
@@ -54,7 +55,7 @@ public class SpawnCubes : MonoBehaviour {
             Vector3 v = realmPositionsSpherical[i];
             Vector3 vi = sphericalToCartesian(5000f, Mathf.Deg2Rad * v.y, Mathf.Deg2Rad * v.z);
             realmPositions.Add(vi);
-            GameObject realm = spawnPlatform(vi, Quaternion.identity);
+            GameObject realm = spawnPlatform(vi, Quaternion.identity, i);
             realm.transform.localScale *= 500f;
             realm.transform.up = -vi;
             foreach (MeshRenderer meshRenderer in realm.GetComponentsInChildren<MeshRenderer>()) {
@@ -76,7 +77,7 @@ public class SpawnCubes : MonoBehaviour {
         return realmPositions[realmId];
     }
 
-    GameObject spawnPlatform(Vector3 position, Quaternion orientation) {
+    GameObject spawnPlatform(Vector3 position, Quaternion orientation, int realmId) {
         GameObject platform = Instantiate(Platform, position, orientation, leavesContainer);
         return platform;
     }
@@ -93,9 +94,9 @@ public class SpawnCubes : MonoBehaviour {
         trunk.transform.localScale = new Vector3(trunkLength / 40f, trunkLength / 2, trunkLength / 40f);
         trunk.transform.position += trunk.transform.up * trunkLength / 2;
         if (depth > 5) {
-            GameObject leaf = spawnPlatform(position, orientation);
-            leaf.transform.position += leaf.transform.up * (trunkLength + leaf.transform.localScale.x);
             int realmId = RandomIndexWithWeights(realmPlatformFrequencies);
+            GameObject leaf = spawnPlatform(position, orientation, realmId);
+            leaf.transform.position += leaf.transform.up * (trunkLength + leaf.transform.localScale.x);
             Color color = colors[Random.Range(0, colors.Count)];
             if (realmId >= 0) {
                 color = colors[realmId];
