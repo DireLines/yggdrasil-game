@@ -34,6 +34,7 @@ public class CarveShape : MonoBehaviour {
         Mesh tmesh = new Mesh();
         tmesh.vertices = vertices;
         tmesh.triangles = indices;
+        tmesh.name = "Intersection";
         tmesh.RecalculateBounds();
         tmesh.RecalculateNormals();
         tmesh.Optimize();
