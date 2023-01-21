@@ -9,15 +9,9 @@ public class Lantern : MonoBehaviour {
     List<int> keysToRemove;
 
     void Start() {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 100000f, 1 << LayerMask.NameToLayer("Tree"));
-        foreach (Collider collider in colliders) {
-            SetComponentsActive(collider.gameObject, false);
-        }
         currentColliders = new Dictionary<int, (GameObject, bool)>();
         ids = new List<int>();
         keysToRemove = new List<int>();
-
-
     }
     void Update() {
         ids.Clear();
@@ -31,7 +25,9 @@ public class Lantern : MonoBehaviour {
         foreach (Collider collider in colliders) {
             int id = collider.gameObject.GetInstanceID();
             if (!currentColliders.ContainsKey(id)) {
-                SetComponentsActive(collider.gameObject, true);
+                foreach(ActivatedObject activatedObject in collider.gameObject.GetComponents<ActivatedObject>()) {
+                    activatedObject.SetActivated(true);
+                }
             }
             currentColliders[id] = (collider.gameObject, true);
         }
@@ -44,16 +40,10 @@ public class Lantern : MonoBehaviour {
         }
         foreach (int id in keysToRemove) {
             var v = currentColliders[id];
-            SetComponentsActive(v.Item1, false);
+            foreach(ActivatedObject activatedObject in v.Item1.GetComponents<ActivatedObject>()) {
+                activatedObject.SetActivated(false);
+            }
             currentColliders.Remove(id);
-        }
-    }
-    void SetComponentsActive(GameObject obj, bool active) {
-        foreach (MonoBehaviour component in obj.GetComponents<MonoBehaviour>()) {
-            component.enabled = active;
-        }
-        foreach (MeshRenderer mr in obj.GetComponents<MeshRenderer>()) {
-            mr.enabled = active;
         }
     }
 }

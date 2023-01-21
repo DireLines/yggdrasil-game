@@ -1,7 +1,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class BasicMovement : MonoBehaviour {
+public class BasicMovement : MonoBehaviour
+{
     [Tooltip("Movement")]
     [SerializeField]
     private float moveSpeed = 1f;
@@ -18,7 +19,8 @@ public class BasicMovement : MonoBehaviour {
     private int stairLayer;
     Vector3 startPos;
 
-    private void Start() {
+    private void Start()
+    {
         rb = GetComponent<Rigidbody>();
         input = GetComponent<InputCapture>();
 
@@ -28,7 +30,8 @@ public class BasicMovement : MonoBehaviour {
         startPos = transform.position;
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         //Movement
         float right = input.GetAxis("Player Horizontal");
         float forward = input.GetAxis("Player Forward");
@@ -37,7 +40,8 @@ public class BasicMovement : MonoBehaviour {
         Vector3 forwardDirection = Vector3.ProjectOnPlane(cam.forward, transform.up).normalized;
 
         Vector3 direction = rightDirection * right + forwardDirection * forward + transform.up * vertical;
-        if (direction.sqrMagnitude > 1f) {
+        if (direction.sqrMagnitude > 1f)
+        {
             direction.Normalize();
         }
         Move(direction);
@@ -48,7 +52,8 @@ public class BasicMovement : MonoBehaviour {
         //     inventory.PreviousItem();
         // }
     }
-    private void Update() {
+    private void Update()
+    {
         // if (Input.GetKeyDown(KeyCode.R)) {
         //     if (input.HasSequence("seq1")) {
         //         input.StopRecord();
@@ -60,27 +65,33 @@ public class BasicMovement : MonoBehaviour {
         // if (Input.GetKeyDown(KeyCode.G)) {
         //     SwitchGravity();
         // }
-        if (Input.GetKeyDown(KeyCode.R)) {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
             Restart();
         }
         SetColor(Color.white);
-        if (input.playing) {
+        if (input.playing)
+        {
             SetColor(Color.green);
         }
-        if (input.recording) {
+        if (input.recording)
+        {
             SetColor(Color.red);
         }
     }
-    void SetColor(Color color) {
+    void SetColor(Color color)
+    {
         GetComponent<MeshRenderer>().material.color = color;
     }
-    void Restart() {
+    void Restart()
+    {
         transform.position = startPos;
         transform.rotation = Quaternion.identity;
         rb.velocity = Vector3.zero;
         currentVelocity = Vector3.zero;
     }
-    public void Move(Vector3 dir) {
+    public void Move(Vector3 dir)
+    {
         targetVelocity = dir * moveSpeed * Time.fixedDeltaTime;
         currentVelocity = Vector3.SmoothDamp(currentVelocity, targetVelocity, ref currentVelocity, accelerationMultiplier / 10f, moveSpeed);
 
